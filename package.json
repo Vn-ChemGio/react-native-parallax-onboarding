@@ -10,6 +10,7 @@
   "files": [
     "src",
     "lib",
+    "types",
     "android",
     "ios",
     "cpp",
@@ -156,5 +157,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "react-native-reanimated": "~3.3.0"
   }
 }
