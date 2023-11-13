@@ -36,6 +36,7 @@ const ParallaxOnboarding = ({
     const activeIndex = Math.round(translateX.value / PAGE_WIDTH);
     if (activeIndex === data.length - 1) onEnd();
     else scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex + 1) });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -49,7 +50,7 @@ const ParallaxOnboarding = ({
 
       <Animated.ScrollView
         ref={scrollRef as any}
-        style={{ flex: 1 }}
+        style={styles.scrollView}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -97,6 +98,9 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1.7,
     fontWeight: '500',
+  },
+  scrollView: {
+    flex: 1,
   },
   footer: {
     height: 100,

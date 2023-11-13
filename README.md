@@ -3,7 +3,9 @@
 React Native Onboarding with Parallax Effect with React Native Reanimated
 ## Demo
 
-<img src="https://github.com/Vn-ChemGio/react-native-parallax-onboarding/blob/master/demo/demo.gif" height="400" />
+<img src="https://github.com/Vn-ChemGio/react-native-parallax-onboarding/blob/master/demo/demo.gif" width='432'/>
+
+https://www.youtube.com/shorts/aJlDO4Kn9ik
 
 (This example is using free assets from https://storyset.com)
 
@@ -39,7 +41,7 @@ const data: PageInterface[] = [
   },
 ];
 
-return <ParallaxOnboardingInterface
+return <ParallaxOnboarding
   data = {data}
   backgroundColor={}
   headerTextStyle={}

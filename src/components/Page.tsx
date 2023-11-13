@@ -72,7 +72,7 @@ const Page: React.FC<PageProps> = ({
         />
 
         {!hideDot && (
-          <View style={[styles.fillCenter, { flexDirection: 'row' }]}>
+          <View style={styles.fillCenter}>
             {data.map((_, indexData) => {
               return (
                 <Dot
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   fillCenter: {
     width: PAGE_WIDTH,
     height: 20,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
