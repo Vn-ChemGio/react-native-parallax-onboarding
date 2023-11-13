@@ -8,7 +8,7 @@ import Animated, {
   useDerivedValue,
 } from 'react-native-reanimated';
 import type { PageInterface } from '../types';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
+import { PAGE_WIDTH, PAGE_HEIGHT, CIRCLE_WIDTH } from '../constants';
 import Dot from './Dot';
 
 interface PageProps {
@@ -93,8 +93,6 @@ const Page: React.FC<PageProps> = ({
     </View>
   );
 };
-
-const CIRCLE_WIDTH = PAGE_WIDTH * 0.7;
 
 const styles = StyleSheet.create({
   container: {

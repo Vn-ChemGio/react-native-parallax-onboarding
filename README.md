@@ -47,6 +47,16 @@ return <ParallaxOnboardingInterface
   onEnd={()=>{}} //function call after done onboarding
 />
 ```
+## Example
+In root directory
+- Install dependencies
+```sh
+yarn install
+```
+- Run the example
+```sh
+yarn run example
+```
 
 ## Contributing
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.

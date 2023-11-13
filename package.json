@@ -1,6 +1,6 @@
 {
   "name": "react-native-parallax-onboarding",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React Native Onboarding with Parallax Effect",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -159,6 +159,7 @@
     ]
   },
   "dependencies": {
-    "react-native-reanimated": "~3.3.0"
+    "react-native-reanimated": "~3.3.0",
+    "react-native-redash": "^18.1.1"
   }
 }

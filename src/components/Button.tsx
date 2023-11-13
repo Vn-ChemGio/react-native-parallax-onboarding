@@ -1,46 +1,99 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import {
+  type NativeSyntheticEvent,
+  type NativeTouchEvent,
+  StyleSheet,
+  type TextProps,
+} from 'react-native';
 import Animated, {
+  processColor,
+  type SharedValue,
   useAnimatedStyle,
-  withTiming,
+  useDerivedValue,
+  withSpring,
 } from 'react-native-reanimated';
+import { bin, mix, mixColor, ReText, round } from 'react-native-redash';
 
-interface DotProps {
-  index: number;
-  activeDotIndex: Animated.SharedValue<number>;
+import type { PageInterface } from '../types';
+import { CIRCLE_WIDTH, PAGE_WIDTH } from '../constants';
+
+interface DotProps extends TextProps {
+  translateX: SharedValue<number>;
+  data: PageInterface[];
 }
 
-const Button: React.FC<DotProps> = ({ activeDotIndex, index }) => {
-  const rDotStyle = useAnimatedStyle(() => {
-    const isActive = activeDotIndex.value === index;
+const Button: React.FC<DotProps> = ({ translateX, data, onPressIn }) => {
+  const isActive = bin(
+    round(translateX.value / PAGE_WIDTH) === data.length - 1
+  );
+
+  const transition = mix(isActive, 0, 1);
+
+  const bgColor = mixColor(
+    transition,
+    processColor('#fff'),
+    processColor('#F9A826'),
+    'RGB'
+  );
+  const borderColor = mixColor(
+    transition,
+    processColor('#F9A826'),
+    processColor('#fff'),
+    'RGB'
+  );
+
+  const dotStyle = useAnimatedStyle(() => ({
+    width: withSpring(
+      Math.round(translateX.value / PAGE_WIDTH) !== data.length - 1
+        ? 64
+        : CIRCLE_WIDTH,
+      { duration: 1000 }
+    ),
+  }));
+
+  const textStyle = useAnimatedStyle(() => {
     return {
-      backgroundColor: withTiming(!isActive ? '#f5e2d2' : '#fcba51', {
-        duration: 150,
-      }),
+      fontSize: withSpring(
+        Math.round(translateX.value / PAGE_WIDTH) !== data.length - 1 ? 18 : 24,
+        { duration: 1000 }
+      ),
     };
   });
 
+  const text = useDerivedValue(() =>
+    Math.round(translateX.value / PAGE_WIDTH) !== data.length - 1
+      ? 'Next'
+      : 'Start'
+  );
+
+  const onPress = (event: NativeSyntheticEvent<NativeTouchEvent>) => {
+    event.preventDefault();
+    onPressIn?.(event);
+  };
   return (
-    <Animated.View style={[styles.dot, rDotStyle]}>
-      {activeDotIndex.value !== index ? (
-        <Text>Next</Text>
-      ) : (
-        <Text>Start</Text>
-      )}
+    <Animated.View
+      style={[styles.dot, dotStyle, { backgroundColor: bgColor, borderColor }]}
+    >
+      <ReText
+        text={text}
+        style={[textStyle, { color: borderColor }]}
+        onPressIn={onPress}
+      />
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   dot: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    height: 64,
+    width: 64,
+    borderRadius: 32,
+    color: 'white',
+    borderWidth: 2,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'white',
   },
 });
 

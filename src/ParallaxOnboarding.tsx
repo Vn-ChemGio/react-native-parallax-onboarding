@@ -3,14 +3,12 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
-  useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
 import type { ParallaxOnboardingProps } from './types';
@@ -34,14 +32,10 @@ const ParallaxOnboarding = ({
     },
   });
 
-  const activeIndex = useDerivedValue(() => {
-    return Math.round(translateX.value / PAGE_WIDTH);
-  });
-
   const onIconPress = useCallback(() => {
-    if (activeIndex.value === data.length - 1) onEnd();
-    else
-      scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex.value + 1) });
+    const activeIndex = Math.round(translateX.value / PAGE_WIDTH);
+    if (activeIndex === data.length - 1) onEnd();
+    else scrollRef.current?.scrollTo({ x: PAGE_WIDTH * (activeIndex + 1) });
   }, []);
 
   return (
@@ -71,9 +65,9 @@ const ParallaxOnboarding = ({
       </Animated.ScrollView>
 
       <View style={styles.footer}>
-        <TouchableHighlight onPress={onIconPress}>
-          <Button activeDotIndex={activeIndex} index={data.length - 1} />
-        </TouchableHighlight>
+        <TouchableOpacity onPress={onIconPress}>
+          <Button {...{ translateX, data, onPressIn: onIconPress }} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -109,6 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1000,
   },
 });
 
